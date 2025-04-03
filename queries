@@ -1,0 +1,74 @@
+-- Active: 1743664600480@@127.0.0.1@3306@university_management
+-- 1. Retrieve all professors  
+SELECT * FROM professors;  
+
+-- 2. Retrieve all courses with their assigned professors  
+SELECT   
+    courses.title AS course_name,  
+    courses.credits AS credit_hours,  
+    professors.name AS professor_name  
+FROM courses  
+JOIN professors ON courses.professor_id = professors.professor_id;  
+
+-- 3. Retrieve all students  
+SELECT * FROM students;  
+
+-- 4. Get students enrolled in 'Introduction to Programming'  
+SELECT   
+    students.name AS student_name,  
+    students.email AS student_email,  
+    courses.title AS course_name,  
+    enrollments.semester  
+FROM enrollments  
+JOIN students ON enrollments.student_id = students.student_id  
+JOIN courses ON enrollments.course_id = courses.course_id  
+WHERE courses.title = 'Introduction to Programming';  
+
+-- 5. Count students grouped by their majors  
+SELECT   
+    major AS student_major,   
+    COUNT(*) AS num_students  
+FROM students  
+GROUP BY major;  
+
+-- 6. Count the number of students enrolled in each course  
+SELECT   
+    courses.title AS course_name,   
+    COUNT(enrollments.enrollment_id) AS num_students  
+FROM courses  
+LEFT JOIN enrollments ON courses.course_id = enrollments.course_id  
+GROUP BY courses.course_id;  
+
+-- 7. Retrieve professors and their students  
+SELECT   
+    professors.name AS professor_name,  
+    courses.title AS course_name,  
+    students.name AS student_name  
+FROM enrollments  
+JOIN courses ON enrollments.course_id = courses.course_id  
+JOIN professors ON courses.professor_id = professors.professor_id  
+JOIN students ON enrollments.student_id = students.student_id  
+ORDER BY professors.name, courses.title;  
+
+-- 8. List courses without any enrollments  
+SELECT   
+    courses.title AS course_name,  
+    professors.name AS professor_name  
+FROM courses  
+LEFT JOIN enrollments ON courses.course_id = enrollments.course_id  
+JOIN professors ON courses.professor_id = professors.professor_id  
+WHERE enrollments.course_id IS NULL;  
+
+  
+
+-- 10. Find all enrolled students for a specific professor  
+SELECT   
+    professors.name AS professor_name,  
+    students.name AS student_name,  
+    courses.title AS course_name,  
+    enrollments.semester  
+FROM professors  
+JOIN courses ON professors.professor_id = courses.professor_id  
+JOIN enrollments ON courses.course_id = enrollments.course_id  
+JOIN students ON enrollments.student_id = students.student_id  
+WHERE professors.name = 'Dr. Smith';  
