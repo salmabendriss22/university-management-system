@@ -1,0 +1,39 @@
+-- Active: 1743664600480@@127.0.0.1@3306@university_management
+-- Create the Professors table  
+CREATE TABLE professors (  
+    professor_id INT AUTO_INCREMENT PRIMARY KEY, -- Auto-incrementing ID  
+    name VARCHAR(100) NOT NULL,                 -- Professor's name  
+    department VARCHAR(50),                     -- Department of the professor  
+    email VARCHAR(100) UNIQUE NOT NULL          -- Unique email address  
+);  
+
+-- Create the Students table  
+CREATE TABLE students (  
+    student_id INT AUTO_INCREMENT PRIMARY KEY,  -- Auto-incrementing ID  
+    name VARCHAR(100) NOT NULL,                 -- Student's name  
+    email VARCHAR(100) UNIQUE NOT NULL,         -- Unique email address for the student  
+    major VARCHAR(50) NOT NULL,                 -- Student's major  
+    enrollment_date DATE                        -- Date the student was enrolled  
+);  
+
+-- Create the Courses table  
+CREATE TABLE courses (  
+    course_id INT AUTO_INCREMENT PRIMARY KEY,  -- Auto-incrementing ID  
+    title VARCHAR(100) NOT NULL,               -- Course title  
+    credits INT NOT NULL,                      -- Number of credits for the course  
+    professor_id INT,                          -- Foreign key pointing to professors table  
+    FOREIGN KEY (professor_id) REFERENCES professors(professor_id)   
+        ON DELETE SET NULL                     -- If professor is deleted, the course remains  
+);  
+
+-- Create the Enrollments table  
+CREATE TABLE enrollments (  
+    enrollment_id INT AUTO_INCREMENT PRIMARY KEY, -- Auto-incrementing ID  
+    student_id INT,                               -- Foreign key for student  
+    course_id INT,                                -- Foreign key for course  
+    semester VARCHAR(10),                         -- Semester (e.g., Spring, Fall)  
+    FOREIGN KEY (student_id) REFERENCES students(student_id)  
+        ON DELETE CASCADE,                        -- If the student is deleted, this record is deleted  
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)  
+        ON DELETE CASCADE                         -- If the course is deleted, this record is deleted  
+);  
