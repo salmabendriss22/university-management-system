@@ -1,0 +1,29 @@
+-- Active: 1743664600480@@127.0.0.1@3306@university_management
+-- Insert data into the professors table  
+INSERT IGNORE INTO professors (name, department, email)  
+VALUES  
+    ('Dr. Smith', 'Computer Science', 'smith@university.edu'),  
+    ('Dr. Miller', 'Mathematics', 'miller@university.edu'),  
+    ('Dr. Johnson', 'Physics', 'johnson@university.edu'),  
+    ('Dr. Stevens', 'Biology', 'stevens@university.edu'); -- New professor    
+
+-- Insert data into the students table  
+INSERT INTO students (name, email, major, enrollment_date)  
+VALUES  
+    ('Alice Brown', 'alice.brown@university.edu', 'Computer Science', '2025-01-15'),  
+    ('Bob Taylor', 'bob.taylor@university.edu', 'Mathematics', '2025-01-20'),  
+    ('Claire Evans', 'claire.evans@university.edu', 'Physics', '2025-01-22');  
+
+-- Insert data into the courses table  
+INSERT INTO courses (title, credits, professor_id)  
+VALUES  
+    ('Introduction to Programming', 3, 1), -- Dr. Smith  
+    ('Calculus I', 4, 2), -- Dr. Miller  
+    ('Physics I', 3, 3); -- Dr. Johnson  
+
+-- Insert data into the enrollments table  
+INSERT INTO enrollments (student_id, course_id, semester)  
+VALUES  
+    (1, 1, 'Spring 2025'), -- Alice enrolled in Introduction to Programming  
+    (2, 2, 'Spring 2025'), -- Bob enrolled in Calculus I  
+    (3, 3, 'Spring 2025'); -- Claire enrolled in Physics I   
